@@ -8,10 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -22,7 +21,9 @@ import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.search.SearchResult
 import me.pblinux.tvmaze.data.viewmodel.HomeViewModel
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
+import me.pblinux.tvmaze.ui.composables.common.Back
 import me.pblinux.tvmaze.ui.composables.home.RowShowItem
+import me.pblinux.tvmaze.ui.composables.search.SuggestedShows
 import me.pblinux.tvmaze.ui.composables.states.Loading
 import me.pblinux.tvmaze.ui.screens.LocalNavigation
 
@@ -33,6 +34,7 @@ fun Search(
 ) {
     val state by homeViewModel.results.collectAsState()
     val query by homeViewModel.query.collectAsState()
+    val suggested by homeViewModel.suggested.collectAsState()
 
     val navController = LocalNavigation.current
     val focusManager = LocalFocusManager.current
@@ -42,6 +44,12 @@ fun Search(
             contentPadding = PaddingValues(24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
+            item {
+                Back {
+                    navController.popBackStack()
+                }
+            }
+
             item {
                 Text(
                     text = "Search your favourites",
@@ -71,7 +79,10 @@ fun Search(
             when (state) {
                 State.Uninitialized -> {
                     item {
-                        Text("Hola")
+                        SuggestedShows(state = suggested) {
+                            showViewModel.changeShow(it)
+                            navController.navigate("showDetail")
+                        }
                     }
                 }
                 State.Loading -> {

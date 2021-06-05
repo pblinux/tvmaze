@@ -15,19 +15,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
+import me.pblinux.tvmaze.ui.composables.common.Back
 import me.pblinux.tvmaze.ui.composables.show.EpisodeHeader
 import me.pblinux.tvmaze.ui.composables.show.PosterBackground
+import me.pblinux.tvmaze.ui.screens.LocalNavigation
 import me.pblinux.tvmaze.utils.clean
 
 @Composable
 fun Episode(showViewModel: ShowViewModel = hiltViewModel()) {
     val episode by showViewModel.episode.collectAsState()
+    val navController = LocalNavigation.current
+
     episode?.let { ep ->
         Scaffold {
             PosterBackground(image = ep.image?.original)
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 40.dp),
             ) {
+                item {
+                    Back {
+                        navController.popBackStack()
+                    }
+                }
+
                 item {
                     EpisodeHeader(
                         image = ep.image?.original,

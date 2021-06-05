@@ -22,12 +22,17 @@ fun EpisodeHeader(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column {
+        Column(Modifier.weight(0.5f)) {
             Text(text = "#$number", style = MaterialTheme.typography.h2)
             Text(text = name, style = MaterialTheme.typography.h4)
             Text(text = "Season $season", style = MaterialTheme.typography.h5)
         }
         Spacer(Modifier.width(24.dp))
-        Poster(image = image, contentScale = ContentScale.Crop, posterSize = 200.dp)
+        Poster(
+            image = image,
+            contentScale = ContentScale.Crop,
+            posterSize = 200.dp,
+            modifier = Modifier.weight(0.5f)
+        )
     }
 }

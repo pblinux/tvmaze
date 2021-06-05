@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.episode.Episode
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
+import me.pblinux.tvmaze.ui.composables.common.Back
 import me.pblinux.tvmaze.ui.composables.common.SeasonsTabBar
 import me.pblinux.tvmaze.ui.composables.show.PosterBackground
 import me.pblinux.tvmaze.ui.composables.show.ShowEpisodes
@@ -37,6 +38,12 @@ fun Show(showViewModel: ShowViewModel = hiltViewModel()) {
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                item {
+                    Back {
+                        navController.popBackStack()
+                    }
+                }
+
                 item {
                     ShowHeader(
                         image = current.image?.medium,

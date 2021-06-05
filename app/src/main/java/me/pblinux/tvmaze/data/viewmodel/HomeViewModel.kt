@@ -25,14 +25,27 @@ class HomeViewModel @Inject constructor(
         Pager(PagingConfig(pageSize = 10)) { PagingShows(source) }.flow.cachedIn(viewModelScope)
 
     private val _query: MutableStateFlow<String> = MutableStateFlow("")
-    val query : StateFlow<String> = _query.asStateFlow()
+    val query: StateFlow<String> = _query.asStateFlow()
 
     private val _search: MutableStateFlow<State> = MutableStateFlow(State.Uninitialized)
     val results = _search.asStateFlow()
 
+    private val _suggested: MutableStateFlow<State> = MutableStateFlow(State.Uninitialized)
+    val suggested = _suggested.asStateFlow()
+
+    init {
+        getSuggested()
+    }
+
     fun updateQuery(query: String) {
         viewModelScope.launch {
             _query.emit(query)
+        }
+    }
+
+    private fun getSuggested() {
+        viewModelScope.launch {
+            repository.getSuggestedShows().collect { _suggested.emit(it) }
         }
     }
 

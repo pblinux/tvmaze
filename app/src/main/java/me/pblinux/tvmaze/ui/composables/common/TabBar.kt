@@ -86,12 +86,15 @@ fun SeasonsTabBar(
         backgroundColor = Color.Transparent,
         contentColor = Color.Transparent,
         divider = {},
+        edgePadding = 8.dp
     ) {
         episodeInfo.onEachIndexed { index, entry ->
             val selected = index == selectedTab
+            val title = if (entry.key > 100) "${entry.key}" else "Season ${entry.key}"
+
             Tab(selected = selected, onClick = { onTabClicked(index) }) {
                 Text(
-                    "Season ${entry.key}", style = MaterialTheme.typography.subtitle2.copy(
+                    title, style = MaterialTheme.typography.subtitle2.copy(
                         color = if (selected) selectedColor else unselectedColor
                     )
                 )

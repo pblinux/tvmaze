@@ -5,23 +5,31 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = Lavender,
     primaryVariant = DarkLavender,
     secondary = LightGreen,
-    background = RichBlack
+    background = RichBlack,
+    surface = Color.Transparent,
 )
 
 private val LightColorPalette = lightColors(
     primary = Lavender,
     primaryVariant = DarkLavender,
     secondary = LightGreen,
-    background = White
+    background = White,
+    surface = Color.Transparent,
 )
 
 @Composable
 fun TVMazeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = !darkTheme
+
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
@@ -32,6 +40,10 @@ fun TVMazeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
         DarkTypography
     } else {
         LightTypography
+    }
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = useDarkIcons)
     }
 
     MaterialTheme(

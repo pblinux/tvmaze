@@ -26,13 +26,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
-            val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
-
-            SideEffect {
-                systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = useDarkIcons)
-            }
-
             TVMazeTheme {
                 TVMazeApp()
             }
