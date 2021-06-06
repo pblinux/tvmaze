@@ -71,6 +71,11 @@ dependencies {
     implementation("androidx.paging:paging-compose:1.0.0-alpha10")
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha02")
+    // Room
+    annotationProcessor("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
+    implementation("androidx.room:room-ktx:${rootProject.extra["roomVersion"]}")
+    implementation("androidx.room:room-runtime:${rootProject.extra["roomVersion"]}")
+    kapt("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
     // Third-party
     //Accompanist
     implementation("com.google.accompanist:accompanist-coil:${rootProject.extra["accompanistVersion"]}")

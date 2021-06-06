@@ -13,7 +13,7 @@ import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.show.Show
 import me.pblinux.tvmaze.data.paging.PagingShows
 import me.pblinux.tvmaze.data.repository.TVMazeRepository
-import me.pblinux.tvmaze.data.source.TVMazeSource
+import me.pblinux.tvmaze.data.source.remote.TVMazeSource
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +23,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     var shows: Flow<PagingData<Show>> =
         Pager(PagingConfig(pageSize = 10)) { PagingShows(source) }.flow.cachedIn(viewModelScope)
+
+    private val _favourites: MutableStateFlow<List<Show>> = MutableStateFlow(listOf())
+    val favourites: StateFlow<List<Show>> = _favourites.asStateFlow()
 
     private val _query: MutableStateFlow<String> = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
@@ -34,6 +37,7 @@ class HomeViewModel @Inject constructor(
     val suggested = _suggested.asStateFlow()
 
     init {
+        getFavourites()
         getSuggested()
     }
 
@@ -46,6 +50,24 @@ class HomeViewModel @Inject constructor(
     private fun getSuggested() {
         viewModelScope.launch {
             repository.getSuggestedShows().collect { _suggested.emit(it) }
+        }
+    }
+
+    private fun getFavourites() {
+        viewModelScope.launch {
+            repository.getFavourites().collect { _favourites.emit(it) }
+        }
+    }
+
+    fun addToFavourites(show: Show) {
+        viewModelScope.launch {
+            repository.addToFavourites(show)
+        }
+    }
+
+    fun removeFromFavourites(show: Show) {
+        viewModelScope.launch {
+            repository.removeFromFavourites(show)
         }
     }
 

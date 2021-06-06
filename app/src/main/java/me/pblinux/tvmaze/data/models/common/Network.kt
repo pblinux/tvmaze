@@ -1,13 +1,12 @@
 package me.pblinux.tvmaze.data.models.common
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import androidx.room.Embedded
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Parcelize
 data class Network(
-    val id: Int,
-    val name: String,
-    val country: Country?
-) : Parcelable
+    @SerialName("country") @Embedded val networkCountry: Country?,
+    @SerialName("id") val networkId: Int,
+    @SerialName("name") val networkName: String,
+)

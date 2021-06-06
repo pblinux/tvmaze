@@ -1,4 +1,4 @@
-package me.pblinux.tvmaze.data.source
+package me.pblinux.tvmaze.data.source.remote
 
 import android.util.Log
 import me.pblinux.tvmaze.data.models.episode.Episode

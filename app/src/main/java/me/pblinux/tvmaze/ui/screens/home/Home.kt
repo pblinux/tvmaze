@@ -33,7 +33,10 @@ val Tabs = listOf(HomeTabs.ShowsTab, HomeTabs.MyListTab)
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
-fun Home(showViewModel: ShowViewModel = hiltViewModel()) {
+fun Home(
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    showViewModel: ShowViewModel = hiltViewModel()
+) {
     val pagerState = rememberPagerState(pageCount = Tabs.size)
     val nestedState = rememberNestedScrollViewState()
     val coroutineScope = rememberCoroutineScope()
@@ -60,7 +63,7 @@ fun Home(showViewModel: ShowViewModel = hiltViewModel()) {
                             Shows(showViewModel = showViewModel)
                         }
                         HomeTabs.MyListTab -> {
-//                            MyList()
+                            MyList(homeViewModel = homeViewModel, showViewModel = showViewModel)
                         }
                     }
 

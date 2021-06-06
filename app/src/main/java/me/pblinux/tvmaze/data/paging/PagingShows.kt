@@ -3,7 +3,7 @@ package me.pblinux.tvmaze.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import me.pblinux.tvmaze.data.models.show.Show
-import me.pblinux.tvmaze.data.source.TVMazeSource
+import me.pblinux.tvmaze.data.source.remote.TVMazeSource
 
 class PagingShows(
     private val source: TVMazeSource,

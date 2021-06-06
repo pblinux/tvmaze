@@ -5,8 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Parcelize
 data class Schedule(
     val time: String,
     val days: List<String>
-) : Parcelable
+)

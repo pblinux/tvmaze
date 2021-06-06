@@ -1,20 +1,23 @@
 package me.pblinux.tvmaze.di
 
+import android.content.Context
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import me.pblinux.tvmaze.data.repository.TVMazeRepository
-import me.pblinux.tvmaze.data.source.TVMazeService
-import me.pblinux.tvmaze.data.source.TVMazeSource
+import me.pblinux.tvmaze.data.source.local.TVDatabase
+import me.pblinux.tvmaze.data.source.remote.TVMazeService
+import me.pblinux.tvmaze.data.source.remote.TVMazeSource
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @ExperimentalSerializationApi
 @Module
@@ -48,7 +51,15 @@ object SourceModule {
     }
 
     @Provides
-    fun providesTVMazeRepository(): TVMazeRepository {
-        return TVMazeRepository(providesTVMazeSource())
+    fun providesDatabase(@ApplicationContext applicationContext: Context): TVDatabase {
+        return Room.databaseBuilder(
+            applicationContext,
+            TVDatabase::class.java, "tv-maze"
+        ).build()
+    }
+
+    @Provides
+    fun providesTVMazeRepository(@ApplicationContext applicationContext: Context): TVMazeRepository {
+        return TVMazeRepository(providesTVMazeSource(), providesDatabase(applicationContext))
     }
 }

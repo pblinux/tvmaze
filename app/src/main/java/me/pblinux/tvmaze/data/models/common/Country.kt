@@ -1,13 +1,12 @@
 package me.pblinux.tvmaze.data.models.common
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import androidx.room.ColumnInfo
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Parcelize
 data class Country(
-    val name: String,
-    val code: String,
-    val timezone: String
-) : Parcelable
+    @ColumnInfo(name = "countryName") @SerialName("name") val countryName: String,
+    @ColumnInfo(name = "countryCode") @SerialName("code") val countryCode: String,
+    @ColumnInfo(name = "countryTimezone") @SerialName("timezone") val countryTimezone: String
+)

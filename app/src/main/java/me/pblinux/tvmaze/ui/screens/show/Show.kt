@@ -7,12 +7,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.episode.Episode
+import me.pblinux.tvmaze.data.viewmodel.HomeViewModel
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
 import me.pblinux.tvmaze.ui.composables.common.Back
 import me.pblinux.tvmaze.ui.composables.common.SeasonsTabBar
@@ -25,13 +29,19 @@ import me.pblinux.tvmaze.utils.clean
 
 @Suppress("UNCHECKED_CAST")
 @Composable
-fun Show(showViewModel: ShowViewModel = hiltViewModel()) {
+fun Show(
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    showViewModel: ShowViewModel = hiltViewModel()
+) {
     val navController = LocalNavigation.current
     val show by showViewModel.show.collectAsState()
     val episodes by showViewModel.episodes.collectAsState()
+    val favourites by homeViewModel.favourites.collectAsState()
     var selectedSeason by remember { mutableStateOf(0) }
 
     show?.let { current ->
+        val isShowFavourite = favourites.contains(current)
+
         Scaffold {
             PosterBackground(image = current.image?.original)
             LazyColumn(
@@ -48,11 +58,20 @@ fun Show(showViewModel: ShowViewModel = hiltViewModel()) {
                     ShowHeader(
                         image = current.image?.medium,
                         name = current.name,
-                        network = current.network?.name,
+                        network = current.network?.networkName,
                         rating = current.rating.average?.toFloat(),
                         categories = current.genres,
                         premiered = current.premiered,
-                    )
+                        favText = if (isShowFavourite) "Remove from favourites" else "Add to favourites",
+                        favIcon = if (isShowFavourite) Icons.Default.Delete else Icons.Default.Add
+                    ) {
+                        if (isShowFavourite) {
+                            homeViewModel.removeFromFavourites(current)
+                        } else {
+                            homeViewModel.addToFavourites(current)
+                        }
+
+                    }
                 }
 
                 item {

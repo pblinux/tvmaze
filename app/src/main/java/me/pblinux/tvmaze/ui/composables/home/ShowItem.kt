@@ -65,7 +65,7 @@ fun ShowItem(
         }
         Spacer(Modifier.height(8.dp))
         Text(show.name, style = MaterialTheme.typography.h6)
-        Text(show.network?.let { show.network.name } ?: show.genres.first(),
+        Text(show.network?.let { show.network.networkName } ?: show.genres.first(),
             style = MaterialTheme.typography.body2)
         Spacer(Modifier.height(8.dp))
         RatingBar(
@@ -117,7 +117,7 @@ fun RowShowItem(
         Column(Modifier.weight(0.6f)) {
             Text(show.name, style = MaterialTheme.typography.h6)
             if (show.network != null) {
-                Text(show.network.name, style = MaterialTheme.typography.body2)
+                Text(show.network.networkName, style = MaterialTheme.typography.body2)
             }
             Spacer(Modifier.height(8.dp))
             Text(

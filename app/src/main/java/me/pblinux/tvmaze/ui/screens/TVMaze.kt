@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import me.pblinux.tvmaze.data.viewmodel.HomeViewModel
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
 import me.pblinux.tvmaze.ui.screens.home.Home
 import me.pblinux.tvmaze.ui.screens.search.Search
@@ -41,13 +42,22 @@ fun TVMazeApp() {
 
     CompositionLocalProvider(LocalNavigation provides navController) {
         val showViewModel: ShowViewModel = hiltViewModel()
+        val homeViewModel: HomeViewModel = hiltViewModel()
 
         Box(Modifier.fillMaxSize()) {
             NavHost(navController = navController, startDestination = TVScreen.Home.route) {
-                composable(TVScreen.Home.route) { SwitchAnimation { Home(showViewModel) } }
-                composable(TVScreen.Search.route) { SwitchAnimation { Search(showViewModel = showViewModel) } }
-                composable(TVScreen.Show.route) { SwitchAnimation { Show(showViewModel) } }
-                composable(TVScreen.Episode.route) { SwitchAnimation { Episode(showViewModel) } }
+                composable(TVScreen.Home.route) {
+                    SwitchAnimation { Home(homeViewModel, showViewModel) }
+                }
+                composable(TVScreen.Search.route) {
+                    SwitchAnimation { Search(showViewModel = showViewModel) }
+                }
+                composable(TVScreen.Show.route) {
+                    SwitchAnimation { Show(homeViewModel, showViewModel) }
+                }
+                composable(TVScreen.Episode.route) {
+                    SwitchAnimation { Episode(showViewModel) }
+                }
             }
         }
     }
