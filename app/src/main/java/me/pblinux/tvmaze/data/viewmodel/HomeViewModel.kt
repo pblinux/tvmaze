@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getSuggested() {
+    fun getSuggested() {
         viewModelScope.launch {
             repository.getSuggestedShows().collect { _suggested.emit(it) }
         }

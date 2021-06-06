@@ -8,10 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -61,8 +64,8 @@ fun Search(
             item {
                 OutlinedTextField(
                     query, onValueChange = { homeViewModel.updateQuery(it) },
-                    label = { Text(text = stringResource(id = R.string.your_search),) },
-                    placeholder = { Text(text = stringResource(id = R.string.search_suggestion),) },
+                    label = { Text(text = stringResource(id = R.string.your_search)) },
+                    placeholder = { Text(text = stringResource(id = R.string.search_suggestion)) },
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             homeViewModel.search()
@@ -81,10 +84,12 @@ fun Search(
             when (state) {
                 State.Uninitialized -> {
                     item {
-                        SuggestedShows(state = suggested) {
-                            showViewModel.changeShow(it)
+                        SuggestedShows(state = suggested, onClick = {
+                            homeViewModel.getSuggested()
+                        }, onItemCLicked = { item ->
+                            showViewModel.changeShow(item)
                             navController.navigate("showDetail")
-                        }
+                        })
                     }
                 }
                 State.Loading -> {

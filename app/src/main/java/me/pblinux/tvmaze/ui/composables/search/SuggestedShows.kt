@@ -16,8 +16,8 @@ import me.pblinux.tvmaze.ui.composables.home.ShowItem
 import me.pblinux.tvmaze.ui.composables.states.StateHandler
 
 @Composable
-fun SuggestedShows(state: State, onItemCLicked: (Show) -> Unit) {
-    StateHandler<List<Show>>(state = state) {
+fun SuggestedShows(state: State, onItemCLicked: (Show) -> Unit, onClick: () -> Unit) {
+    StateHandler<List<Show>>(state = state, onClick = onClick) {
         Column(Modifier.fillMaxWidth()) {
             Text(
                 stringResource(id = R.string.suggestions),

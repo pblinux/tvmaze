@@ -77,7 +77,7 @@ fun ShowHeader(
             }
             premiered?.let {
                 Spacer(Modifier.height(8.dp))
-                Text("${stringResource(id = R.string.first_aired)}: $it")
+                Text("${stringResource(id = R.string.first_aired)} $it")
             }
             Spacer(Modifier.height(8.dp))
             Button(
