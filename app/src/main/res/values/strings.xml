@@ -1,3 +1,17 @@
 <resources>
+    <string name="add_to_favourites">Add to favourites</string>
     <string name="app_name">TVMaze</string>
+    <string name="first_aired">First aired:</string>
+    <string name="my_list">My List</string>
+    <string name="no_info_available">No info available</string>
+    <string name="no_shows_founded">No shows were found in this section</string>
+    <string name="remove_from_favourites">Remove from favourites</string>
+    <string name="schedule">Schedule:</string>
+    <string name="search">Search your favourites</string>
+    <string name="search_suggestion">Twin Peaks, Breaking Bad, Preacher…</string>
+    <string name="seasons">Seasons:</string>
+    <string name="shows">Shows</string>
+    <string name="suggestions">Some suggestions for you:</string>
+    <string name="summary">Summary:</string>
+    <string name="your_search">Your search:</string>
 </resources>

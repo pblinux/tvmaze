@@ -14,9 +14,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.pblinux.tvmaze.R
 import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.search.SearchResult
 import me.pblinux.tvmaze.data.viewmodel.HomeViewModel
@@ -52,15 +54,15 @@ fun Search(
 
             item {
                 Text(
-                    text = "Search your favourites",
+                    text = stringResource(id = R.string.search),
                     style = MaterialTheme.typography.h3.copy(MaterialTheme.colors.secondary)
                 )
             }
             item {
                 OutlinedTextField(
                     query, onValueChange = { homeViewModel.updateQuery(it) },
-                    label = { Text("Your search") },
-                    placeholder = { Text("Twin Peaks, WestWorld, Breaking Bad...") },
+                    label = { Text(text = stringResource(id = R.string.your_search),) },
+                    placeholder = { Text(text = stringResource(id = R.string.search_suggestion),) },
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             homeViewModel.search()

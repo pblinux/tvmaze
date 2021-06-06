@@ -11,9 +11,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.pblinux.tvmaze.R
 import me.pblinux.tvmaze.data.models.State
 import me.pblinux.tvmaze.data.models.episode.Episode
 import me.pblinux.tvmaze.data.viewmodel.HomeViewModel
@@ -62,7 +64,8 @@ fun Show(
                         rating = current.rating.average?.toFloat(),
                         categories = current.genres,
                         premiered = current.premiered,
-                        favText = if (isShowFavourite) "Remove from favourites" else "Add to favourites",
+                        favText = if (isShowFavourite) stringResource(id = R.string.remove_from_favourites)
+                        else stringResource(id = R.string.add_to_favourites),
                         favIcon = if (isShowFavourite) Icons.Default.Delete else Icons.Default.Add
                     ) {
                         if (isShowFavourite) {
@@ -76,7 +79,10 @@ fun Show(
 
                 item {
                     Column {
-                        Text("Schedule", style = MaterialTheme.typography.h6)
+                        Text(
+                            stringResource(id = R.string.schedule),
+                            style = MaterialTheme.typography.h6
+                        )
                         current.schedule.days.forEach { day ->
                             Text("$day at ${current.schedule.time}")
                         }
@@ -84,18 +90,18 @@ fun Show(
                 }
 
                 item {
-                    Text("Summary:", style = MaterialTheme.typography.h6)
+                    Text(stringResource(id = R.string.summary), style = MaterialTheme.typography.h6)
                 }
 
                 item {
                     Text(
-                        current.summary?.clean() ?: "No info available",
+                        current.summary?.clean() ?: stringResource(id = R.string.no_info_available),
                         textAlign = TextAlign.Justify
                     )
                 }
 
                 item {
-                    Text("Seasons:", style = MaterialTheme.typography.h6)
+                    Text(stringResource(id = R.string.seasons), style = MaterialTheme.typography.h6)
                 }
 
                 when (episodes) {

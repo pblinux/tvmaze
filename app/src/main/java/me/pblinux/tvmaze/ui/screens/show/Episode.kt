@@ -11,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.pblinux.tvmaze.R
 import me.pblinux.tvmaze.data.viewmodel.ShowViewModel
 import me.pblinux.tvmaze.ui.composables.common.Back
 import me.pblinux.tvmaze.ui.composables.show.EpisodeHeader
@@ -52,7 +54,10 @@ fun Episode(showViewModel: ShowViewModel = hiltViewModel()) {
                 }
 
                 item {
-                    Text(text = "Summary", style = MaterialTheme.typography.h6)
+                    Text(
+                        text = stringResource(id = R.string.summary),
+                        style = MaterialTheme.typography.h6
+                    )
                 }
 
                 item {
@@ -61,7 +66,8 @@ fun Episode(showViewModel: ShowViewModel = hiltViewModel()) {
 
                 item {
                     Text(
-                        text = ep.summary?.clean() ?: "No info available",
+                        text = ep.summary?.clean()
+                            ?: stringResource(id = R.string.no_info_available),
                         style = MaterialTheme.typography.body1,
                         textAlign = TextAlign.Justify
                     )

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,22 +98,6 @@ fun RowShowItem(
             modifier = Modifier.weight(0.4f),
             posterSize = posterSize
         ) { onClick(show) }
-//        Card(
-//            Modifier
-//                .size(width = posterSize, height = posterSize.times(1.5f))
-//                .weight(0.4f)
-//        ) {
-//            Image(
-//                painter = rememberCoilPainter(
-//                    request = show.image?.medium,
-//                    fadeIn = true,
-//                    previewPlaceholder = R.drawable.ic_launcher_foreground,
-//                ),
-//                contentDescription = "",
-//                contentScale = ContentScale.FillBounds,
-//                modifier = Modifier.clickable { onClick(show) }
-//            )
-//        }
         Spacer(Modifier.width(16.dp))
         Column(Modifier.weight(0.6f)) {
             Text(show.name, style = MaterialTheme.typography.h6)
@@ -121,7 +106,7 @@ fun RowShowItem(
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                text = show.summary?.clean() ?: "No info available",
+                text = show.summary?.clean() ?: stringResource(id = R.string.no_info_available),
                 style = MaterialTheme.typography.body2,
                 maxLines = 6,
                 overflow = TextOverflow.Ellipsis,
