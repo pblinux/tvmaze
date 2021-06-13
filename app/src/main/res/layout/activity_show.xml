@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="single_show"
+            type="me.pblinux.tvmaze.data.models.show.Show" />
+
+        <variable
+            name="episode_info_visible"
+            type="Boolean" />
+
+        <variable
+            name="show_episodes"
+            type="java.util.List&lt;me.pblinux.tvmaze.data.models.episode.Episode&gt;" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorOnPrimary"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="32dp"
+        tools:context=".ui.activity.ShowActivity">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/show_poster"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="2:3"
+                    app:layout_constraintEnd_toStartOf="@id/show_info"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        imageUrl="@{single_show.image.medium}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/poster" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/show_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/show_poster"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/show_name"
+                        style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{single_show.name}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Breaking Bad" />
+
+                    <TextView
+                        android:id="@+id/show_network"
+                        style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{single_show.network.networkName}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/show_name"
+                        tools:text="AMC" />
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/show_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:numStars="10"
+                        android:rating="5"
+                        android:stepSize="1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/show_network" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/show_categories"
+                        items="@{single_show.genres}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:alignContent="flex_start"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/show_rating"
+                        app:showDivider="none">
+
+
+                    </com.google.android.flexbox.FlexboxLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/show_categories">
+
+                        <TextView
+                            android:id="@+id/show_aired_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="First aired: " />
+
+                        <TextView
+                            android:id="@+id/show_aired"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="@{single_show.premiered}" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/show_schedule_label"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schedule" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/TextAppearance.MdcTypographyStyles.Body1"
+                items="@{single_show.schedule.days}"
+                time="@{single_show.schedule.time}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <TextView
+                android:id="@+id/show_summary_label"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/summary" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/show_summary"
+                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                fixedText="@{single_show.summary}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse cursus in ex vitae dictum. Nam dolor sapien, pharetra a ipsum eget, dictum auctor libero. Praesent eu facilisis purus. Donec dictum augue mi, et pretium tellus interdum ut. Praesent malesuada lectus et venenatis tristique." />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/show_seasons_label"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/seasons" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:visibility="@{episode_info_visible ?  View.VISIBLE : View.GONE}">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="0dp"
+                    app:tabGravity="center"
+                    app:tabIndicator="@null"
+                    app:tabIndicatorColor="@android:color/transparent"
+                    app:tabMode="scrollable"
+                    app:tabTextAppearance="@style/TextAppearance.MdcTypographyStyles.Body2" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    episodes="@{show_episodes}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical">
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
